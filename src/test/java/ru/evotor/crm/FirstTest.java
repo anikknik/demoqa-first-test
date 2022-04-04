@@ -6,6 +6,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 
+import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.open;
@@ -21,14 +22,14 @@ public class FirstTest {
 
     @Test
     void actions() {
-       open("/automation-practice-form");
+        open("/automation-practice-form");
 
         // Значения
         String firstName = "Vasya";
         String lastName = "Pupkin";
         String userEmail = "vasyap@mail.ru";
         String gender = "Other";
-        String userNumber = "88005002233";
+        String phone = "8800500223";
         String subjects = "Math";
         String hobby = "Sports";
         String img = "img/testimg.png";
@@ -41,7 +42,7 @@ public class FirstTest {
         $("#lastName").setValue(lastName);
         $("#userEmail").setValue(userEmail);
         $("#genterWrapper").$(byText(gender)).click();
-        $("#userNumber").setValue(userNumber);
+        $("#userNumber").setValue(phone);
         $("#dateOfBirthInput").click();
         $(".react-datepicker__year-select").selectOption("2002");
         $(".react-datepicker__month-select").selectOption("April");
@@ -57,9 +58,20 @@ public class FirstTest {
         $("#submit").click();
 
         // Вывод
-
-
-
+        $("#example-modal-sizes-title-lg").shouldHave(text("Thanks for submitting the form"));
+        $(".table-responsive").shouldHave(
+                text(firstName + " " + lastName),
+                text(userEmail),
+                text(gender),
+                text(phone),
+                text("01 April,2002"),
+                text(subjects),
+                text(hobby),
+                text(img.substring(4)),
+                text(Address),
+                text(state + " " + city)
+        );
+        $("#closeLargeModal").click();
     }
 
 }
