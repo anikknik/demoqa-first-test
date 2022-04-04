@@ -68,7 +68,7 @@ public class FirstTest {
                 text("01 April,2002"),
                 text(subjects),
                 text(hobby),
-                text(img.substring(4)),
+                text(img.substring(4)), //возвращает текст с пятого символа "testimg.png"
                 text(Address),
                 text(state + " " + city)
         );
