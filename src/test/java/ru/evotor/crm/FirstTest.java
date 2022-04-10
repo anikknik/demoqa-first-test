@@ -2,8 +2,10 @@ package ru.evotor.crm;
 
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.Selenide;
+import com.github.javafaker.Faker;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import pages.RegistrationFormPage;
 
 
 import static com.codeborne.selenide.Condition.text;
@@ -21,59 +23,55 @@ public class FirstTest {
         Configuration.browserSize = "1920x1080";
     }
 
+    RegistrationFormPage RegistrationFormPage = new RegistrationFormPage();
+    Faker faker = new Faker();
+
+    // Значения
+    String firstName = faker.name().firstName(),
+            lastName = faker.name().lastName(),
+            userEmail = faker.internet().emailAddress(),
+            gender = "Other",
+            day = "01",
+            month = "April",
+            year = "2002",
+            phone = faker.phoneNumber().subscriberNumber(10),
+            subjects = "Math",
+            hobby = "Sports",
+            img = "img/testimg.png",
+            Address = faker.address().streetAddress(),
+            state = "Uttar Pradesh",
+            city = "Merrut";
+
+
     @Test
     void actions() {
-        open("/automation-practice-form");
+    // Ввод
+        RegistrationFormPage.OpenPage()
+                .setFirstName(firstName)
+                .setLastName(lastName)
+                .setUserEmail(userEmail)
+                .setGender(gender)
+                .setUserNumber(phone)
+                .setBirthDate(day, month, year)
+                .setSubjects(subjects)
+                .setUserHobbies(hobby)
+                .upLoadPicture(img)
+                .setAddress(Address)
+                .setState(state)
+                .setCity(city)
+                .submitClick()
 
-        // Значения
-        String firstName = "Vasya";
-        String lastName = "Pupkin";
-        String userEmail = "vasyap@mail.ru";
-        String gender = "Other";
-        String phone = "8800500223";
-        String subjects = "Math";
-        String hobby = "Sports";
-        String img = "img/testimg.png";
-        String Address = "Pushkina st., 10";
-        String state = "Uttar Pradesh";
-        String city = "Merrut";
-
-        // Ввод
-        $("#firstName").setValue(firstName);
-        $("#lastName").setValue(lastName);
-        $("#userEmail").setValue(userEmail);
-        $("#genterWrapper").$(byText(gender)).click();
-        $("#userNumber").setValue(phone);
-        $("#dateOfBirthInput").click();
-        $(".react-datepicker__year-select").selectOption("2002");
-        $(".react-datepicker__month-select").selectOption("April");
-        $("[aria-label='Choose Monday, April 1st, 2002']").click();
-        $("#subjectsInput").setValue(subjects).pressEnter();
-        $("#hobbiesWrapper").$(byText(hobby)).click();
-        $("#uploadPicture").uploadFromClasspath(img);
-        $("#currentAddress").setValue(Address);
-        $("#state").click();
-        $("#stateCity-wrapper").$(byText(state)).click();
-        $("#city").click();
-        $("#stateCity-wrapper").$(byText(city)).click();
-        $("#submit").click();
-
-        // Вывод
-        $("#example-modal-sizes-title-lg").shouldHave(text("Thanks for submitting the form"));
-        $(".table-responsive").shouldHave(
-                text(firstName + " " + lastName),
-                text(userEmail),
-                text(gender),
-                text(phone),
-                text("01 April,2002"),
-                text(subjects),
-                text(hobby),
-                text(img.substring(4)), //возвращает текст с пятого символа "testimg.png"
-                text(Address),
-                text(state + " " + city)
-        );
-        $("#closeLargeModal").click();
-        $(".modal-content").shouldNotBe(visible);
+    // Вывод и проверка
+                .checkCompletedForm("Student Name", firstName + " " + lastName)
+                .checkCompletedForm("Student Email", userEmail)
+                .checkCompletedForm("Gender", gender)
+                .checkCompletedForm("Mobile", phone)
+                .checkCompletedForm("Date of Birth", day + " " + month + "," + year)
+                .checkCompletedForm("Subjects", subjects)
+                .checkCompletedForm("Hobbies", hobby)
+                .checkCompletedForm("Picture", img.substring(4))
+                .checkCompletedForm("Address", Address)
+                .checkCompletedForm("State and City", state + " " + city);
     }
 
 }
