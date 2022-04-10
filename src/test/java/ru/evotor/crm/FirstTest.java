@@ -38,7 +38,7 @@ public class FirstTest {
             subjects = "Math",
             hobby = "Sports",
             img = "img/testimg.png",
-            Address = faker.address().streetAddress(),
+            address = faker.address().streetAddress(),
             state = "Uttar Pradesh",
             city = "Merrut";
 
@@ -56,7 +56,7 @@ public class FirstTest {
                 .setSubjects(subjects)
                 .setUserHobbies(hobby)
                 .upLoadPicture(img)
-                .setAddress(Address)
+                .setAddress(address)
                 .setState(state)
                 .setCity(city)
                 .submitClick()
@@ -70,7 +70,7 @@ public class FirstTest {
                 .checkCompletedForm("Subjects", subjects)
                 .checkCompletedForm("Hobbies", hobby)
                 .checkCompletedForm("Picture", img.substring(4))
-                .checkCompletedForm("Address", Address)
+                .checkCompletedForm("Address", address)
                 .checkCompletedForm("State and City", state + " " + city);
     }
 
