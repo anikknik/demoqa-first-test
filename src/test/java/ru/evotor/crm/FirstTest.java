@@ -28,7 +28,7 @@ public class FirstTest {
     RegistrationFormPage registrationFormPage = new RegistrationFormPage();
     Faker faker = new Faker();
 
-    // Значения
+// Значения
     String firstName = faker.name().firstName(),
             lastName = faker.name().lastName(),
             userEmail = faker.internet().emailAddress(),
@@ -47,7 +47,7 @@ public class FirstTest {
 
     @Test
     void actions() {
-    // Ввод
+// Ввод
         registrationFormPage.openPage("/automation-practice-form")
                 .setFirstName(firstName)
                 .setLastName(lastName)
@@ -63,7 +63,7 @@ public class FirstTest {
                 .setCity(city)
                 .submitClick()
 
-    // Вывод и проверка
+// Вывод и проверка
                 .checkCompletedForm("Student Name", firstName + " " + lastName)
                 .checkCompletedForm("Student Email", userEmail)
                 .checkCompletedForm("Gender", gender)
