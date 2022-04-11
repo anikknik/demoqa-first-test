@@ -27,7 +27,6 @@ public class FirstTest {
 
     RegistrationFormPage registrationFormPage = new RegistrationFormPage();
     Faker faker = new Faker();
-    File file = new File("src/test/resources/img/testimg.png");
 
     // Значения
     String firstName = faker.name().firstName(),
