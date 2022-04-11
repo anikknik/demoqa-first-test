@@ -11,7 +11,7 @@ import static com.codeborne.selenide.Selenide.open;
 
 public class RegistrationFormPage {
 
-    CalendarComponent CalendarComponent = new CalendarComponent();
+    CalendarComponent calendarComponent = new CalendarComponent();
 
     // locators
     SelenideElement
@@ -31,8 +31,9 @@ public class RegistrationFormPage {
             resultsTable = $(".table-responsive");
 
     // actions
-    public RegistrationFormPage OpenPage() {
-        open("/automation-practice-form");
+    public RegistrationFormPage openPage(String secondUrl) {
+        open(secondUrl);
+        $(".practice-form-wrapper").shouldHave(text("Student Registration Form"));
 
         return this;
     }
@@ -69,7 +70,7 @@ public class RegistrationFormPage {
 
     public RegistrationFormPage setBirthDate(String day, String month, String year) {
         calendar.click();
-        CalendarComponent.setDate(day, month, year);
+        calendarComponent.setDate(day, month, year);
 
         return this;
     }
@@ -87,7 +88,7 @@ public class RegistrationFormPage {
     }
 
     public RegistrationFormPage upLoadPicture(String namePicture) {
-        upLoadPicture.uploadFromClasspath(namePicture);
+        upLoadPicture.uploadFromClasspath("img/" + namePicture);
 
         return this;
     }

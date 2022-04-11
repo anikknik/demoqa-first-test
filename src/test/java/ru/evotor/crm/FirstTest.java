@@ -8,6 +8,8 @@ import org.junit.jupiter.api.Test;
 import pages.RegistrationFormPage;
 
 
+import java.io.File;
+
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selectors.byText;
@@ -23,8 +25,9 @@ public class FirstTest {
         Configuration.browserSize = "1920x1080";
     }
 
-    RegistrationFormPage RegistrationFormPage = new RegistrationFormPage();
+    RegistrationFormPage registrationFormPage = new RegistrationFormPage();
     Faker faker = new Faker();
+    File file = new File("src/test/resources/img/testimg.png");
 
     // Значения
     String firstName = faker.name().firstName(),
@@ -37,7 +40,7 @@ public class FirstTest {
             phone = faker.phoneNumber().subscriberNumber(10),
             subjects = "Math",
             hobby = "Sports",
-            img = "img/testimg.png",
+            img = "testimg.png",
             address = faker.address().streetAddress(),
             state = "Uttar Pradesh",
             city = "Merrut";
@@ -46,7 +49,7 @@ public class FirstTest {
     @Test
     void actions() {
     // Ввод
-        RegistrationFormPage.OpenPage()
+        registrationFormPage.openPage("/automation-practice-form")
                 .setFirstName(firstName)
                 .setLastName(lastName)
                 .setUserEmail(userEmail)
@@ -69,7 +72,7 @@ public class FirstTest {
                 .checkCompletedForm("Date of Birth", day + " " + month + "," + year)
                 .checkCompletedForm("Subjects", subjects)
                 .checkCompletedForm("Hobbies", hobby)
-                .checkCompletedForm("Picture", img.substring(4))
+                .checkCompletedForm("Picture", img)
                 .checkCompletedForm("Address", address)
                 .checkCompletedForm("State and City", state + " " + city);
     }
